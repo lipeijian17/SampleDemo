@@ -12,8 +12,8 @@ import (
 	"time"
 )
 
-var appID = "9a3b95751df14cebaf8f155448ee0e36"
-var appCertificate = "9654e7de17154329a55e716830e07d19"
+var appID = ""
+var appCertificate = ""
 
 func generate_RtcToken() (token string) {
 
