@@ -131,10 +131,10 @@ func start_Recording(token string, resourceid string) (sid string) {
             ]
         },
         "storageConfig": {
-            "accessKey": "LTAI5t7wpCo6Ng8pkh5DYFDb",
+            "accessKey": "？",
             "region": 1,
             "bucket": "cloudrecording-lpj",
-            "secretKey": "ed4U00yl7QWSA2ba5LuByb68dDIslM",
+            "secretKey": "？",
             "vendor": 2,
             "fileNamePrefix": [
                 "Recording1",
