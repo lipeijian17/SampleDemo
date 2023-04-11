@@ -63,10 +63,8 @@ func CreatConverter() (converterId string, err error) {
 	}
 
 	defer res.Body.Close()
-	//这里读取多层次的json,还需要修改调整
 	converterid := ParseResponse(res)["converter"].(map[string]interface{})["id"]
 
-	//???zhelizenmebiablidao xiayiji??
 	value, ok := converterid.(string)
 	if !ok {
 		fmt.Println("It's not ok for type string")
@@ -98,7 +96,6 @@ func DeleteConverter(converterId string) {
 		fmt.Println(err)
 		return
 	}
-	// 增加 Authorization header
 	req.Header.Add("Authorization", "Basic "+base64Credentials)
 	req.Header.Add("Content-Type", "application/json")
 
@@ -150,7 +147,6 @@ func UpdateConverter(converterId string) (string, error) {
 		return "", err
 	}
 
-	// 增加 Authorization header
 	req.Header.Add("Authorization", "Basic "+base64Credentials)
 	req.Header.Add("Content-Type", "application/json")
 	//test
@@ -235,7 +231,6 @@ func ListConverter() (string, error) {
 	}
 
 	defer res.Body.Close()
-	//???zhelizenmebiablidao xiayiji??
 	convertercount := ParseResponse(res)["data"].(map[string]interface{})["total_count"]
 
 	value, ok := convertercount.(string)
