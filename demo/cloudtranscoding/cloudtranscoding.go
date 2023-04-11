@@ -225,7 +225,7 @@ func ParseResponse(response *http.Response) map[string]string {
 }
 
 func WriteFile_taskid(taskid string) {
-	// 创建文件
+	// 这里的路径记得修改
 	filePtr, err := os.Create("/Users/lpj/go/src/demo/cloudtranscoding/taskid_info.json")
 	if err != nil {
 		fmt.Println("Create file failed", err.Error())
