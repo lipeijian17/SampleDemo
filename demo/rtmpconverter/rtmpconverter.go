@@ -163,7 +163,6 @@ func UpdateConverter(converterId string) (string, error) {
 	}
 
 	defer res.Body.Close()
-	//???zhelizenmebiablidao xiayiji??
 
 	converterid := ParseResponse(res)["converter"].(map[string]interface{})["id"]
 
@@ -187,7 +186,6 @@ func GetConverter(converterId string) (string, error) {
 		return "", err
 	}
 
-	// 增加 Authorization header
 	req.Header.Add("Authorization", "Basic "+base64Credentials)
 	req.Header.Add("Content-Type", "application/json")
 	//test
@@ -200,7 +198,6 @@ func GetConverter(converterId string) (string, error) {
 	}
 
 	defer res.Body.Close()
-	//???zhelizenmebiablidao xiayiji??
 	convertername := ParseResponse(res)["converter"].(map[string]interface{})["name"]
 	value, ok := convertername.(string)
 	if !ok {
@@ -261,17 +258,13 @@ func ParseResponse(response *http.Response) map[string]interface{} {
 	return result
 }
 
-//定义golang的json读写函数
 func WriteFile_converterId(converterId string) {
-	// 创建文件
 	filePtr, err := os.Create("converterId_info.json")
 	if err != nil {
 		fmt.Println("Create file failed", err.Error())
 		return
 	}
 	defer filePtr.Close()
-
-	// 创建Json编码器
 	encoder := json.NewEncoder(filePtr)
 	err = encoder.Encode(converterId)
 	if err != nil {
@@ -282,14 +275,14 @@ func WriteFile_converterId(converterId string) {
 	}
 }
 
-//定义读取文件
 func ReadFile_converterId() (result string) {
-	file, err := os.Open("/Users/lpj/go/src/demo/rtmpconverter/converterId_info.json") //打开,此处如果打开失败，可以修改成绝对路径
+	//这里记得修改路径
+	file, err := os.Open("/Users/lpj/go/src/demo/rtmpconverter/converterId_info.json") 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	defer file.Close() //关闭
+	defer file.Close() 
 
 	line := bufio.NewReader(file)
 
