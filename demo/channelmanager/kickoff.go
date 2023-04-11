@@ -9,12 +9,12 @@ import (
 	"strings"
 )
 
-var appID = "9a3b95751df14cebaf8f155448ee0e36"
-var appCertificate = "9654e7de17154329a55e716830e07d19"
+var appID = "9a3b9XXXXXXXXXXXXXXXXXXXXXe36"
+var appCertificate = "9654XXXXXXXXXXXXXXXXXXXXX19"
 
 // 客户 ID  客户密钥
-var customerKey = "33ebb114b3284064bf7d049e16f4d696"
-var customerSecret = "c80110826fc74e45a9559518176a2f9a"
+var customerKey = "33ebbXXXXXXXXXXXXXXXXXXXXXd696"
+var customerSecret = "c801XXXXXXXXXXXXXXXXXXXXXf9a"
 
 // 拼接客户 ID 和客户密钥并使用 base64 进行编码
 var plainCredentials = customerKey + ":" + customerSecret
@@ -39,7 +39,6 @@ func Kickoffuser() {
     }`, "Appid", appID, -1))
 
 	client := &http.Client{}
-	//作为client端生成的request body，需不需要手动关闭呢，答案是不需要的
 	req, err := http.NewRequest(method, url, payload)
 
 	if err != nil {
@@ -50,7 +49,7 @@ func Kickoffuser() {
 	// 增加 Authorization header
 	req.Header.Add("Authorization", "Basic "+base64Credentials)
 	req.Header.Add("Content-Type", "application/json")
-	//	req.Header.Add("X-Request-ID", "111111111111111")
+	//req.Header.Add("X-Request-ID", "111111111111111")
 
 	res, err := client.Do(req)
 	print(res)
@@ -58,8 +57,6 @@ func Kickoffuser() {
 		fmt.Println(err)
 		return
 	}
-
-	//打印response
 	fmt.Println(res)
 
 	//作为client端处理response的时候，有一点要注意的是，body一定要close，否则会造成GC回收不到，继而产生内存泄露；
@@ -84,7 +81,6 @@ func Kickoffchannel() {
     }`, "Appid", appID, -1))
 
 	client := &http.Client{}
-	//作为client端生成的request body，需不需要手动关闭呢，答案是不需要的
 	req, err := http.NewRequest(method, url, payload)
 
 	if err != nil {
@@ -103,16 +99,11 @@ func Kickoffchannel() {
 		fmt.Println(err)
 		return
 	}
-
-	//打印response
 	fmt.Println(res)
-
-	//作为client端处理response的时候，有一点要注意的是，body一定要close，否则会造成GC回收不到，继而产生内存泄露；
 	defer res.Body.Close()
 
 }
 
-//对Http请求的返回结果转map处理
 func ParseResponse(response *http.Response) map[string]interface{} {
 	var result map[string]interface{}
 	body, err := ioutil.ReadAll(response.Body)
