@@ -22,12 +22,9 @@ func main() {
 
 	//******云端录制接口******
 	if s == "startCloudRecording" {
-		//云录制接口，定义回调函数来接收处理响应数据？
 		token := cloudrecording.Generate_RtcToken()
 		print(token)
 		print("\n\n")
-
-		//在main包里定义的变量无法被其他包引用，只有在其它包里的全局变量才可以被自已包内，main包或任意的其它包使用    注意要大写
 		resourceid := cloudrecording.Generate_Resourceid()
 		print("-------------------------------------------")
 		print(resourceid)
@@ -35,7 +32,6 @@ func main() {
 		print("\n\n")
 		cloudrecording.WriteFile_resourceid(resourceid)
 
-		//放在协程和回调函数里面执行
 		cloudrecording.Wgcloudrecording.Add(1)
 		cloudrecording.Start_Recording(token, resourceid, func(sid string, err error) {
 			if err != nil {
@@ -58,18 +54,14 @@ func main() {
 	}
 
 	if s == "queryCloudRecording" {
-		//定义一个查询参数
-		//删掉json文件中字符串的前后引号
 		resourceid := strings.Trim(cloudrecording.ReadFile_resourceid(), "\"")
 		sid := strings.Trim(cloudrecording.ReadFile_sid(), "\"")
 		cloudrecording.Query_RecordingFile(resourceid, sid)
 	}
 
-	//定义一个更新的参数
 	//update
 	if s == "updateCloudRecording" {
 		//定义一个查询参数
-		//删掉json文件中字符串的前后引号,读取文件时，只读取双引号内部的字符串
 		resourceid := strings.Trim(cloudrecording.ReadFile_resourceid(), "\"")
 		sid := strings.Trim(cloudrecording.ReadFile_sid(), "\"")
 		cloudrecording.Update_RecordingCogfig(resourceid, sid)
@@ -77,7 +69,6 @@ func main() {
 
 	if s == "updatelayoutCloudRecording" {
 		//定义一个查询参数
-		//删掉json文件中字符串的前后引号,读取文件时，只读取双引号内部的字符串
 		resourceid := strings.Trim(cloudrecording.ReadFile_resourceid(), "\"")
 		sid := strings.Trim(cloudrecording.ReadFile_sid(), "\"")
 		cloudrecording.UpdateLayout_RecordingCogfig(resourceid, sid)
@@ -85,7 +76,6 @@ func main() {
 
 	//定义一个stop的参数
 	if s == "stopCloudRecording" {
-		//读取文件时，只读取双引号内部的字符串
 		resourceid := strings.Trim(cloudrecording.ReadFile_resourceid(), "\"")
 		sid := strings.Trim(cloudrecording.ReadFile_sid(), "\"")
 		cloudrecording.Stop_Recording(resourceid, sid)
@@ -99,12 +89,11 @@ func main() {
 		//var converterI
 		print(converterId)
 		print("\n\n")
-		//将converterId写在文件中
+		//将converterId写在文件中，真实开发环境可以存在数据库
 		rtmpconverter.WriteFile_converterId(converterId)
 	}
 
 	if s == "deleteRtmpConverter" {
-		//delete converter  读取文件时，只读取双引号内部的字符串
 		converterId := strings.Trim(rtmpconverter.ReadFile_converterId(), "\"")
 		print(converterId)
 		print("\n\n")
@@ -112,7 +101,6 @@ func main() {
 	}
 
 	if s == "getRtmpConverter" {
-		//get converter 读取文件时，只读取双引号内部的字符串
 		print("\n\n")
 		converterId := strings.Trim(rtmpconverter.ReadFile_converterId(), "\"")
 		print("\n\n")
@@ -141,8 +129,6 @@ func main() {
 	}
 
 	if s == "deleteCloudPlayer" {
-		//delete就扣现在返回了200，但是实际没有停下来
-		//delete converter  读取文件时，只读取双引号内部的字符串
 		playerId := strings.Trim(cloudplayer.ReadFile_playerid(), "\"")
 		print(playerId)
 		print("\n\n")
