@@ -86,7 +86,6 @@ func main() {
 		//creat converter
 
 		converterId, _ := rtmpconverter.CreatConverter()
-		//var converterI
 		print(converterId)
 		print("\n\n")
 		//将converterId写在文件中，真实开发环境可以存在数据库
@@ -176,7 +175,6 @@ func main() {
 			print(taskid)
 			print("-------------------------------------------")
 			print("\n\n")
-			//调试看到 taskid没有生成
 			cloudtranscoding.WriteFile_taskid(taskid)
 			print("\n\n")
 			print(taskid)
@@ -230,7 +228,7 @@ func main() {
 
 	//******频道管理接口//******
 
-	//踢出某个人
+	//踢出某个uid
 	if s == "kickoffuser" {
 		channelmanager.Kickoffuser()
 	}
