@@ -12,13 +12,13 @@ import (
 	"time"
 )
 
-var appID = "9a3b95751df14cebaf8f155448ee0e36"
+var appID = "9a3XXXXXXXXXXXXXXXXXXXXXe0e36"
 
-var appCertificate = "9654e7de17154329a55e716830e07d19"
+var appCertificate = "9654e7XXXXXXXXXXXXXXXXXXXXX07d19"
 
 // 客户 ID  客户密钥
-var customerKey = "33ebb114b3284064bf7d049e16f4d696"
-var customerSecret = "c80110826fc74e45a9559518176a2f9a"
+var customerKey = "33ebb1XXXXXXXXXXXXXXXXXXXXXf4d696"
+var customerSecret = "c80110XXXXXXXXXXXXXXXXXXXXX176a2f9a"
 
 // 拼接客户 ID 和客户密钥并使用 base64 进行编码
 var plainCredentials = customerKey + ":" + customerSecret
@@ -66,14 +66,14 @@ func Acquire_BuildToken() (tokenName string) {
 	return ParseResponse(res)["tokenName"]
 }
 
-//RTC真实用户的两个token还需动态生成进去，再去调通
+//RTC真实用户的两个token还需动态生成替换进去
 func Create_CloudTranscoder(tokenName string, c callback) {
 	go func() {
 		url_pre := strings.Replace("https://api.agora.io/v1/projects/Appid/rtsc/cloud-transcoder/tasks?builderToken=TokenName", "Appid", appID, -1)
 		print(url_pre)
 		print("\n\n")
 		url := strings.Replace(url_pre, "TokenName", tokenName, -1)
-		//url := "https://api.agora.io/v1/projects/9a3b95751df14cebaf8f155448ee0e36/rtsc/cloud-transcoder/tasks?builderToken=guxRPm8euZb3q2bkMEEaPvv26_uPR-NVFjr-BzpIgZPUGH4X1j-VF-UXZcow_QbtFE_mYkr4hJIyWrui5O2w8nYqHT3D2KeKV07umQXhD796Gn3cOP5uy8yTbOucmZxy5pQzeK1Ds-v4a2pj9y2K-V8HUbvKTCzsSE0srJtF_W0VU2es4biFOnSroiekup46VBiVbyjHm7vCWz4Zy4LnvQ"
+		//url := "https://api.agora.io/v1/projects/9a3bXXXXXXXXXXXXXXXXXXXXX8ee0e36/rtsc/cloud-transcoder/tasks?builderToken=guxRPm8euZb3q2bkMEEaPvv26_uPR-NVFjr-BzpIgZPUGH4X1j-VF-UXZcow_QbtFE_mYkr4hJIyWrui5O2w8nYqHT3D2KeKV07umQXhD796Gn3cOP5uy8yTbOucmZxy5pQzeK1Ds-v4a2pj9y2K-V8HUbvKTCzsSE0srJtF_W0VU2es4biFOnSroiekup46VBiVbyjHm7vCWz4Zy4LnvQ"
 		print(url)
 		print("\n\n")
 
@@ -200,8 +200,6 @@ func Create_CloudTranscoder(tokenName string, c callback) {
 			fmt.Println(err)
 			return
 		}
-
-		//打印response
 		fmt.Println(res)
 
 		defer res.Body.Close()
@@ -212,13 +210,11 @@ func Create_CloudTranscoder(tokenName string, c callback) {
 		print("\n\n")
 
 		c(ParseResponse(res)["taskid"], nil)
-		//等待异步执行完毕
 		Wgcloudtranscoding.Done()
 
 	}()
 }
 
-//对Http请求的返回结果转map处理
 func ParseResponse(response *http.Response) map[string]string {
 	var result map[string]string
 	body, err := ioutil.ReadAll(response.Body)
@@ -236,8 +232,6 @@ func WriteFile_taskid(taskid string) {
 		return
 	}
 	defer filePtr.Close()
-
-	// 创建Json编码器
 	encoder := json.NewEncoder(filePtr)
 	err = encoder.Encode(taskid)
 	if err != nil {
