@@ -14,12 +14,12 @@ import (
 )
 
 //多码率观众端，本例需要把 authorization字段由Basic auth的鉴权改为hmac格式，还需继续修改，再次之前，可以先用node.js的demo验证功能
-var appID = "9a3b95751df14cebaf8f155448ee0e36"
+var appID = "9a3b9XXXXXXXXXXXXXXXXXXXXXee0e36"
 
-//var appCertificate = "9654e7de17154329a55e716830e07d19"
+//var appCertificate = "9654e7dXXXXXXXXXXXXXXXXXXXXX0e07d19"
 // 客户 ID  客户密钥
-var customerKey = "33ebb114b3284064bf7d049e16f4d696"
-var customerSecret = "c80110826fc74e45a9559518176a2f9a"
+var customerKey = "33eXXXXXXXXXXXXXXXXXXXXX696"
+var customerSecret = "c801XXXXXXXXXXXXXXXXXXXXX2f9a"
 
 var timestamp = time.Now().UTC().String()
 
@@ -65,9 +65,9 @@ func EnableMutibitrate() (status string) {
 	}
 
 	//拼接生成需要加密的字符串    ==>签名的算法还是有问题，下一步如何推进，推进完部署docker
-	request_line := "POST /v1/projects/9a3b95751df14cebaf8f155448ee0e36/rtls/abr/config HTTP/2.0"
+	request_line := "POST /v1/projects/9a3b9XXXXXXXXXXXXXXXXXXXXXe36/rtls/abr/config HTTP/2.0"
 	print(request_line)
-	signing_string_pre := "host: api.agora.io\ndate: Date\nPOST /v1/projects/9a3b95751df14cebaf8f155448ee0e36/rtls/abr/config HTTP/2.0"
+	signing_string_pre := "host: api.agora.io\ndate: Date\nPOST /v1/projects/9a3b95751XXXXXXXXXXXXXXXXXXXXXee0e36/rtls/abr/config HTTP/2.0"
 	signing_string := strings.Replace(signing_string_pre, "Date", timestamp, -1)
 	Signing := HmacSha256ToString(signing_string, customerSecret)
 
@@ -306,7 +306,6 @@ func QueryMutibitrateChannels() (status string) {
 	return ParseResponse(res)["status"]
 }
 
-//对Http请求的返回结果转map处理
 func ParseResponse(response *http.Response) map[string]string {
 	var result map[string]string
 	body, err := ioutil.ReadAll(response.Body)
