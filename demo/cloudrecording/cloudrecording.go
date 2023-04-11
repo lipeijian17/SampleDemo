@@ -14,22 +14,18 @@ import (
 	"time"
 )
 
-var appID = "9a3b95751df14cebaf8f155448ee0e36"
-var appCertificate = "9654e7de17154329a55e716830e07d19"
+var appID = "9a3b95XXXXXXXXXXXXXXe0e36"
+var appCertificate = "9654XXXXXXXXXXXXXX07d19"
 
 // 客户 ID  客户密钥
-var customerKey = "33ebb114b3284064bf7d049e16f4d696"
-var customerSecret = "c80110826fc74e45a9559518176a2f9a"
+var customerKey = "33eXXXXXXXXXXXXXX696"
+var customerSecret = "c80XXXXXXXXXXXXXXf9a"
 
 // 拼接客户 ID 和客户密钥并使用 base64 进行编码
 var plainCredentials = customerKey + ":" + customerSecret
 var base64Credentials = base64.StdEncoding.EncodeToString([]byte(plainCredentials))
 
 var Wgcloudrecording sync.WaitGroup
-
-//定义回调函数，回调的参数类型都一样的话，用一个回调就可以
-//type callback_resourceid func(resourceid string, err error)
-//type callback_sid func(sid string, err error)
 type callback func(sid string, err error)
 
 func Generate_RtcToken() (token string) {
@@ -124,10 +120,10 @@ func Start_Recording(token string, resourceid string, c callback) {
         },
 
         "storageConfig": {
-            "accessKey": "LTAI5t9AGYGk783aiEiXdsKy",
+            "accessKey": "LTAXXXXXXXXXXXXXXdsKy",
             "region": 1,
             "bucket": "cloudrecording-lpj",
-            "secretKey": "NQoWsQKKr971e1nqGHyAoqOoE3qyFk",
+            "secretKey": "NQoXXXXXXXXXXXXXXFk",
             "vendor": 2,
             "fileNamePrefix": [
                 "Recording1",
@@ -167,7 +163,6 @@ func Start_Recording(token string, resourceid string, c callback) {
 	}()
 }
 
-//这里要传两个参数
 func Query_RecordingFile(resourceid string, sid string) {
 	url_pre := strings.Replace("https://api.agora.io/v1/apps/Appid/cloud_recording/resourceid/Resourceid/sid/Sid/mode/mix/query", "Resourceid", resourceid, -1) //小于0代表全部替换
 	url_pre2 := strings.Replace(url_pre, "Sid", sid, -1)
@@ -376,7 +371,7 @@ func WriteFile_resourceid(resourceid string) {
 }
 
 func WriteFile_sid(sid string) {
-	// 创建文件
+        //这里的路径可以自行修改为相对路径or自己环境的绝对路径
 	filePtr, err := os.Create("/Users/lpj/go/src/demo/cloudrecording/sid_info.json")
 	if err != nil {
 		fmt.Println("Create file failed", err.Error())
@@ -384,7 +379,6 @@ func WriteFile_sid(sid string) {
 	}
 	defer filePtr.Close()
 
-	// 创建Json编码器
 	encoder := json.NewEncoder(filePtr)
 	err = encoder.Encode(sid)
 	if err != nil {
@@ -395,8 +389,8 @@ func WriteFile_sid(sid string) {
 	}
 }
 
-//定义读取文件
 func ReadFile_resourceid() (result string) {
+        //这里的路径可以自行修改为相对路径or自己环境的绝对路径
 	file, err := os.Open("/Users/lpj/go/src/demo/cloudrecording/resourceid_info.json") //打开
 	if err != nil {
 		fmt.Println(err)
